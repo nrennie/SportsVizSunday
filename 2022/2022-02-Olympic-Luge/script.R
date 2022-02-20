@@ -4,7 +4,6 @@ library(showtext)
 library(rcartocolor)
 library(usefunc)
 
-# read in data
 df <- tibble(read_csv("2022/2022-02-Olympic-Luge/Luge_Data.csv"))
 
 # add fonts
@@ -14,12 +13,13 @@ showtext_auto()
 
 # prep data
 plot_data <- df %>%
-  filter(!is.na(`Speed (mph)`)) %>%
-  mutate(medal = factor(Medal, levels = c(0, 3, 2, 1), labels = c("No Medal", "Bronze", "Silver", "Gold")))
+  filter(!is.na("Speed (mph)")) %>%
+  mutate(medal = factor(Medal, levels = c(0, 3, 2, 1),
+                        labels = c("No Medal", "Bronze", "Silver", "Gold")))
 
 # plot
 plot_data %>%
-  ggplot(aes(x = medal, y = `Speed (mph)`, fill = medal)) +
+  ggplot(aes(x = medal, y = "Speed (mph)", fill = medal)) +
   stat_gradientinterval(position = "dodge",
                         colour = NA,
                         width = 1) +
@@ -50,10 +50,13 @@ plot_data %>%
        title = "Top Speeds in Luge",
        subtitle = str_wrap_break("Lugers compete against a timer in one of the most precisely timed sports in the world -- going as accurate as to the thousandth of a second. Across the 2014 and 2018 Winter Olympics, the top speed was 87.5 mph!\n\nN. Rennie | Data: www.sportsvizsunday.com", 80)) +
   theme_minimal() +
-  theme(axis.title.y = element_text(family = "ubuntu", hjust = 0.5, size = 10, color = "black", margin = margin(t = 0, r = 10, b = 0, l = 0)),
-        axis.title.x = element_text(family = "ubuntu", hjust = 0.5, size = 10, color = "black", margin = margin(t = 10, r = 0, b = 0, l = 0)),
+  theme(axis.title.y = element_text(family = "ubuntu", hjust = 0.5, size = 10, color = "black",
+                                    margin = margin(t = 0, r = 10, b = 0, l = 0)),
+        axis.title.x = element_text(family = "ubuntu", hjust = 0.5, size = 10, color = "black",
+                                    margin = margin(t = 10, r = 0, b = 0, l = 0)),
         axis.text = element_text(family = "ubuntu", hjust = 0.5, size = 10, color = "black"),
-        plot.title = element_text(family = "bungee", hjust = 0, size = 22, color = "black", margin = margin(t = 10, r = 0, b = 10, l = 0)),
+        plot.title = element_text(family = "bungee", hjust = 0, size = 22, color = "black",
+                                  margin = margin(t = 10, r = 0, b = 10, l = 0)),
         plot.subtitle = element_text(family = "ubuntu", hjust = 0, size = 12, color = "black"),
         plot.background = element_rect(fill = "lightgrey", colour="lightgrey"),
         panel.background = element_rect(fill = "lightgrey", colour="lightgrey"),
@@ -61,4 +64,3 @@ plot_data %>%
         legend.position = "none",
         axis.ticks = element_blank()
         )
-
